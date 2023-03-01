@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To Do List</title>
+        <link href="/dist/output.css" rel="stylesheet">
+        <link href="/public/styles.css" rel="stylesheet">
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </head>
+    <body class="py-5 bg-gradient-to-t from-[#11998e] to-[#a6c1ee] h-screen">
+        <div class="flex flex-col px-5 py-5 mx-auto w-[80%] sm:w-[700px] bg-gray-700 rounded-lg text-white shadow-xl">
+            <div class="mb-5 text-white">
+                <input class="bg-gray-700 w-[100%] border-b focus:outline-none caret-white" onfocus="addTask(this)"  placeholder="Add new task" type="text">
+            </div>
+
+            <div class="task-container prevent-select">
+                <div class="group">
+                    <div class="flex gap-8 items-center group group-hover:bg-gray-600 rounded-md px-2 py-1 cursor-pointer">
+                        <input title="Checkbox" class="cursor-pointer" onclick="onChecked(this)" type="checkbox" id="task1">
+                        <label class="overflow-hidden break-words w-full cursor-pointer" for="task1">Tarea 1</label>
+
+                        <!-- <input title="Task name" value="lol" class="bg-gray-700 group-hover:bg-gray-600 border-b focus:outline-none w-full" type="text"> -->
+
+                        <div class="buttons-container flex gap-4 invisible group-hover:visible">
+                            <button type="button" onclick="editTask(this)" title="edit-button" class="hover:text-blue-300 text-xl"><ion-icon name="create-outline"></ion-icon></button>
+                            <button type="button" onclick="deleteTask(this)" title="remove-button" class="hover:text-red-600 text-lg"><ion-icon name="trash-outline"></ion-icon></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/src/index.js"></script>
+    </body>
+</html>
