@@ -3,6 +3,7 @@
 var tempLabel;
 var tempInput;
 
+
 function onChecked(e) {
     let isCompleted = e.checked;
 
@@ -22,6 +23,9 @@ function onChecked(e) {
 }
 
 function addTask(e){
+    let body = document.getElementsByTagName("body")[0];
+    let taskContainer = body.firstElementChild.querySelector(".task-container");
+    let noTasks = taskContainer.querySelector(".no-tasks");
 
     if(e.tagName.toLowerCase() === "input"){
         let btn = document.getElementById("addButtonTask");
@@ -40,20 +44,34 @@ function addTask(e){
     
                     outerDiv.classList.add("group");
     
-                    task.classList.add("flex", "gap-8", "items-center","group-hover:bg-gray-600", "rounded-md", "px-2", "py-1", "cursor-pointer");
+                    task.classList.add("task-element", "flex", "gap-8", "items-center","group-hover:bg-gray-600", "rounded-md", "px-2", "py-1", "cursor-pointer");
     
                     let uuid = crypto.randomUUID();
     
                     task.innerHTML = `<input class="cursor-pointer" onclick="onChecked(this)" type="checkbox" id="${uuid}">
                                         <label class="overflow-hidden break-words w-full cursor-pointer" for="${uuid}">${e.value}</label>
+
                                         <div class="buttons-container flex gap-4 invisible group-hover:visible">
                                             <button type="button" onclick="editTask(this)" title="edit-button" class="hover:text-blue-300 text-xl"><ion-icon name="create-outline"></ion-icon></button>
                                             <button type="button" onclick="deleteTask(this)" title="remove-button" class="hover:text-red-600 text-lg"><ion-icon name="trash-outline"></ion-icon></button>
                                         </div>
+
+                                        <div class="buttons-container-2 flex gap-4 invisible group-hover:visible hidden">
+                                            <button type="button" onclick="editTask(this)" title="confirm-button" class="hover:transition ease-in-out delay-75 duration-75 hover:text-blue-300 text-lg"><ion-icon name="checkmark-outline"></ion-icon></button>
+                                            <button type="button" title="cancel-button" class="hover:transition ease-in-out delay-75 duration-75 hover:text-red-600 text-xl"><ion-icon name="close-outline"></ion-icon></button>
+                                        </div>
                                     `
+                                    
                     outerDiv.appendChild(task);                  
     
                     document.querySelector(".task-container").appendChild(outerDiv);
+
+
+                    if(taskContainer.querySelector(".task-element") === undefined || taskContainer.querySelector(".task-element") === null){
+                        noTasks.classList.remove("hidden");
+                    }else{
+                        noTasks.classList.add("hidden");
+                    } 
     
                     e.value = "";
                     btn.disabled = true;
@@ -75,15 +93,28 @@ function addTask(e){
             let uuid = crypto.randomUUID();
 
             task.innerHTML = `<input class="cursor-pointer" onclick="onChecked(this)" type="checkbox" id="${uuid}">
-                                <label class="overflow-hidden break-words w-full cursor-pointer" for="${uuid}">${input.value}</label>
-                                <div class="buttons-container flex gap-4 invisible group-hover:visible">
-                                    <button type="button" onclick="editTask(this)" title="edit-button" class="hover:text-blue-300 text-xl"><ion-icon name="create-outline"></ion-icon></button>
-                                    <button type="button" onclick="deleteTask(this)" title="remove-button" class="hover:text-red-600 text-lg"><ion-icon name="trash-outline"></ion-icon></button>
-                                </div>
-                            `
+                                        <label class="overflow-hidden break-words w-full cursor-pointer" for="${uuid}">${e.value}</label>
+
+                                        <div class="buttons-container flex gap-4 invisible group-hover:visible">
+                                            <button type="button" onclick="editTask(this)" title="edit-button" class="hover:text-blue-300 text-xl"><ion-icon name="create-outline"></ion-icon></button>
+                                            <button type="button" onclick="deleteTask(this)" title="remove-button" class="hover:text-red-600 text-lg"><ion-icon name="trash-outline"></ion-icon></button>
+                                        </div>
+
+                                        <div class="buttons-container-2 flex gap-4 invisible group-hover:visible hidden">
+                                            <button type="button" onclick="editTask(this)" title="confirm-button" class="hover:transition ease-in-out delay-75 duration-75 hover:text-blue-300 text-lg"><ion-icon name="checkmark-outline"></ion-icon></button>
+                                            <button type="button" title="cancel-button" class="hover:transition ease-in-out delay-75 duration-75 hover:text-red-600 text-xl"><ion-icon name="close-outline"></ion-icon></button>
+                                        </div>
+                                    `
+                            
             outerDiv.appendChild(task);                  
 
             document.querySelector(".task-container").appendChild(outerDiv);
+
+            if(taskContainer.querySelector(".task-element") === undefined || taskContainer.querySelector(".task-element") === null){
+                noTasks.classList.remove("hidden");
+            }else{
+                noTasks.classList.add("hidden");
+            } 
 
             input.value = "";
             e.disabled = true;
@@ -93,7 +124,17 @@ function addTask(e){
 }
 
 function deleteTask(e){
+    let body = document.getElementsByTagName("body")[0];
+    let taskContainer = body.firstElementChild.querySelector(".task-container");
+    let noTasks = taskContainer.querySelector(".no-tasks");
+
     e.parentElement.parentElement.remove();
+
+    if(taskContainer.querySelector(".task-element") === undefined || taskContainer.querySelector(".task-element") === null){
+        noTasks.classList.remove("hidden");
+    }else{
+        noTasks.classList.add("hidden");
+    } 
 }
 
 function editTask(e){
@@ -125,12 +166,12 @@ function editTask(e){
         });
 
         input.addEventListener("focusout", () => {
-             if(!clicked){
-                input.replaceWith(tempLabel);
+            if(!clicked){
+            input.replaceWith(tempLabel);
 
-                buttonsContainer.classList.remove("hidden");
-                buttonsContainer2.classList.add("hidden");
-             }
+            buttonsContainer.classList.remove("hidden");
+            buttonsContainer2.classList.add("hidden");
+            }
         })
 
         tempInput = input;
